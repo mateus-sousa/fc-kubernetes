@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: "go-hello"
+  labels:
+    app: "go-hello"
+spec:
+  containers:
+    - name: go-hello
+      image: mateuspanda/hello
