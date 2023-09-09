@@ -16,4 +16,32 @@ spec:
     spec:
       containers:
         - name: go-hello
-          image: mateuspanda/hello:3
+          image: mateuspanda/hello:6
+          envFrom:
+            - configMapRef:
+                name: go-hello-env
+            - secretRef:
+                name: go-hello-secret
+          volumeMounts:
+            - mountPath: "myfamily"
+              name: config
+              readOnly: true
+          # env:
+          #   - name: NAME
+          #     valueFrom:
+          #       configMapKeyRef:
+          #         name: go-hello-env
+          #         key: NAME
+          #   - name: AGE
+          #     valueFrom:
+          #       configMapKeyRef:
+          #         name: go-hello-env
+          #         key: AGE
+      volumes:
+        - name: config
+          configMap:
+            name: configmap-family
+            items:
+            - key: members
+              path: "family.txt"
+

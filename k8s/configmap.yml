@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: go-hello-env
+data:
+  NAME: "Mateus Panda"
+  AGE: "27"
