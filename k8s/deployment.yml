@@ -16,7 +16,29 @@ spec:
     spec:
       containers:
         - name: go-hello
-          image: mateuspanda/hello:6
+          image: mateuspanda/hello:9
+          startupProbe:
+            httpGet:
+              path: "/healthz"
+              port: 80
+            periodSeconds: 3
+            failureThreshold: 30
+          readinessProbe:
+            httpGet: 
+              path: "/healthz"
+              port: 80
+            periodSeconds: 3
+            failureThreshold: 1
+            # initialDelaySeconds: 10
+          livenessProbe:
+            httpGet:
+              path: "/healthz"
+              port: 80            
+            periodSeconds: 5 # a cada quantos segundos vai tentar
+            timeoutSeconds: 1 # tempo limite para obter resposta nas tentativas
+            successThreshold: 1 # apos quantas tentativas bem sucedidas é suprido o probe
+            failureThreshold: 1 # apos quantas tentativas mal sucedidas apos ter dado sucesso, a probe falha.
+            # initialDelaySeconds: 15 # delay para iniciar a tentar, apos o startup, não é mais necessario
           envFrom:
             - configMapRef:
                 name: go-hello-env
