@@ -8,7 +8,7 @@ spec:
   selector:
     matchLabels:
       app: go-hello
-  replicas: 2
+  replicas: 1
   template:
     metadata:
       labels:
@@ -16,7 +16,14 @@ spec:
     spec:
       containers:
         - name: go-hello
-          image: mateuspanda/hello:9
+          image: mateuspanda/hello:10
+          resources:
+            requests:
+              cpu: "0.05"
+              memory: 20Mi
+            limits:
+              cpu: "0.05"
+              memory: 25Mi
           startupProbe:
             httpGet:
               path: "/healthz"

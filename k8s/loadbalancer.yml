@@ -7,7 +7,7 @@ metadata:
 spec:
   selector:
     app: go-hello
-  type: NodePort
+  type: LoadBalancer
   ports:
   - name: go-hello-service
     port: 9000
