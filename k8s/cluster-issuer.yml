@@ -1,0 +1,16 @@
+# Essa API só cunciona ao instalar o cert-manager no cluster
+apiVersion: cert-manager.io/v1alpha2
+kind: ClusterIssuer
+metadata:
+  name: letsencrypt
+  namespace: cert-manager
+spec:
+  acme:
+    server: https://acme-v02.api.letsencrypt.org/directory
+    email: mateus.sousa157@gmail.com
+    privateKeySecretRef:
+      name: letsencrypt-tls
+    solvers:
+    - http01:
+        ingress:
+          class: nginx

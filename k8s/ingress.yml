@@ -5,6 +5,8 @@ metadata:
   name: ingress-host
   annotations:
     kubernetes.io/ingress.class: "nginx"
+    cert-manager.io/cluster-issuer: "letsencrypt"
+    ingress.kubernetes.io/force-ssl-redirect: "true"
 spec:
   rules:
   - host: "kubefc.com.br"
@@ -14,3 +16,7 @@ spec:
       path: "/"
       backend:
         serviceName: go-hello-service
+  tls:
+  - hosts:
+    - "kubefc.com.br"
+    secretName: letsencrypt-tls
