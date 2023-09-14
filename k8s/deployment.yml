@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: go-hello
-          image: mateuspanda/hello:10
+          image: mateuspanda/hello:11
           resources:
             requests:
               cpu: "0.05"
@@ -52,9 +52,11 @@ spec:
             - secretRef:
                 name: go-hello-secret
           volumeMounts:
-            - mountPath: "myfamily"
+            - mountPath: "/myfamily"
               name: config
               readOnly: true
+            - mountPath: "/pvc"
+              name: go-hello-volume
           # env:
           #   - name: NAME
           #     valueFrom:
@@ -67,6 +69,9 @@ spec:
           #         name: go-hello-env
           #         key: AGE
       volumes:
+        - name: go-hello-volume
+          persistentVolumeClaim:
+            claimName: go-hello-pvc
         - name: config
           configMap:
             name: configmap-family
