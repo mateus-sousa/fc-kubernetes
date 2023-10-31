@@ -1,11 +1,15 @@
-FROM golang:1.18
+# FROM golang:1.18
 
-WORKDIR /app
+# WORKDIR /app
 
-COPY . .
+# COPY . .
 
-RUN apt-get update -y && apt-get install -y iputils-ping
+# RUN apt-get update -y && apt-get install -y iputils-ping
 
-RUN go build -o hello .
+# RUN go build -o hello .
 
-CMD ["./hello"]
+# CMD ["./hello"]
+
+FROM docker
+COPY --from=docker/buildx-bin /buildx /usr/lib/docker/cli-plugins/docker-buildx
+RUN docker buildx version

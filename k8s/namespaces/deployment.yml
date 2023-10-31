@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: "go-hello"
+  labels:
+    app: go-hello
+spec:
+  selector:
+    matchLabels:
+      app: go-hello
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: "go-hello"
+    spec:
+      serviceAccount: hello
+      containers:
+        - name: go-hello
+          image: mateuspanda/hello:11
+          resources:
+            requests:
+              cpu: "0.05"
+              memory: 20Mi
+            limits:
+              cpu: "0.05"
+              memory: 25Mi        
+      volumes:
+        - name: go-hello-volume
+          persistentVolumeClaim:
+            claimName: go-hello-pvc
+        - name: config
+          configMap:
+            name: configmap-family
+            items:
+            - key: members
+              path: "family.txt"
+
